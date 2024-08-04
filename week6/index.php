@@ -115,57 +115,52 @@ echo $book . "<br>";
 /*_-_-_-_-_-_-_-_-_-_-_-  TASK 3.2  _-_-_-_-_-_-_-_-_-_-_-*/
 echo '<h2 style="text-transform: capitalize"> task 3.2 OOP </h2>';
 
-class Circle1
-{
+trait Circle1 {
     private $radius;
     private $color;
 
-    public function __construct($radius = 1.0, $color = "red")
-    {
+    public function __construct($radius = 1.0, $color = "red") {
         $this->radius = $radius;
         $this->color = $color;
     }
 
-    public function getRadius()
-    {
+    public function getRadius() {
         return $this->radius;
     }
 
-    public function setRadius($radius)
-    {
+    public function setRadius($radius) {
         $this->radius = $radius;
     }
 
-    public function getColor()
-    {
+    public function getColor() {
         return $this->color;
     }
 
-    public function setColor($color)
-    {
+    public function setColor($color) {
         $this->color = $color;
     }
 
-    public function getArea()
-    {
-        return pi() *  $this->radius * $this->radius ;
+    public function getArea() {
+        return pi() * $this->radius * $this->radius;
     }
 
-    public function __toString()
-    {
+    public function __toString() {
         return "Circle[radius={$this->radius}, color={$this->color}]";
     }
 }
 
-
-class Cylinder extends Circle1
+class Cylinder
 {
+    use Circle1;
+
     private $height;
 
     public function __construct($radius = 1.0, $height = 1.0, $color = "red")
     {
-        parent::__construct($radius, $color);
+        // Call parent constructor
+        $this->setRadius($radius);
         $this->height = $height;
+        $this->setColor($color);
     }
 
     public function getHeight()
@@ -185,15 +180,20 @@ class Cylinder extends Circle1
 
     public function __toString()
     {
-        return "Cylinder[radius={$this->getRadius()}, height={$this->height}, color={$this->getColor()}]";
+        return "Cylinder[radius={$this->getRadius()}, color={$this->getColor()}, height={$this->height}]";
     }
 }
-$circle = new Circle1(5.0, "blue");
-echo $circle .  "<br>";
-echo "Area: " . $circle->getArea() .  "<br>";
-$cylinder = new Cylinder(5.0, 10.0, "green");
-echo $cylinder .  "<br>";
+
+
+$cylinder = new Cylinder(3.5, 5.0, "blue");
+echo $cylinder . "<br>"; // Uses __toString method
+echo "Radius: " . $cylinder->getRadius() .  "<br>";
+echo "Color: " . $cylinder->getColor() .  "<br>";
+echo "Height: " . $cylinder->getHeight() .  "<br>";
 echo "Volume: " . $cylinder->getVolume() .  "<br>";
+$cylinder->setHeight(6.0);
+$cylinder->setRadius(4.0);
+echo $cylinder .  "<br>";
 
 /*_-_-_-_-_-_-_-_-_-_-_-  TASK 4.1  _-_-_-_-_-_-_-_-_-_-_-*/
 echo '<h2 style="text-transform: capitalize"> task 4.1 OOP </h2>';
